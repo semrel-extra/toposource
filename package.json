@@ -1,0 +1,46 @@
+{
+  "name": "@qiwi/toposource",
+  "version": "0.0.0",
+  "description": "Directed graphs analyzer for parallel traversals",
+  "main": "src/main/js/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "style": "eslint src",
+    "style:fix": "yarn style --fix",
+    "verify": "yarn style && yarn test",
+    "test": "yarn test:unit",
+    "test:unit": "c8 -r html -r text -r lcov --exclude src/test uvu src/test/js"
+  },
+  "files": [
+    "src/main",
+    "README.md",
+    "package.json"
+  ],
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/semrel-extra/toposource.git"
+  },
+  "devDependencies": {
+    "c8": "^7.12.0",
+    "eslint": "^8.32.0",
+    "eslint-config-qiwi": "^2.0.8",
+    "typescript": "^4.9.4",
+    "uvu": "^0.5.6"
+  },
+  "keywords": [
+    "topological",
+    "sort",
+    "sorting",
+    "graphs",
+    "graph",
+    "dependency",
+    "list",
+    "dependencies",
+    "acyclic"
+  ],
+  "author": "Choro Abdymanapov <oljekechoro@mail.ru>",
+  "license": "MIT"
+}
