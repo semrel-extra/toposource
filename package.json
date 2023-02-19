@@ -1,32 +1,55 @@
 {
-  "name": "@qiwi/toposource",
+  "name": "toposource",
   "version": "0.0.0",
   "description": "Directed graphs analyzer for parallel traversals",
-  "main": "src/main/js/index.js",
+  "main": "./target/cjs/index.js",
+  "module": "./target/esm/index.mjs",
+  "types": "./target/dts/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./target/cjs/index.js",
+      "import": "./target/esm/index.mjs",
+      "types": "./target/dts/index.d.ts"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "style": "eslint src",
-    "style:fix": "yarn style --fix",
-    "verify": "yarn style && yarn test",
+    "build": "concurrently 'npm:build:*'",
+    "build:esm": "node ./build.cjs && rename -f 's/\\.js$/\\.mjs/' target/esm/*.js",
+    "build:cjs": "node ./build.cjs --cjs",
+    "build:dts": "tsc --emitDeclarationOnly --outDir target/dts",
+    "lint": "eslint src",
+    "lint:fix": "yarn style --fix",
+    "verify": "yarn lint && yarn test",
     "test": "yarn test:unit",
-    "test:unit": "c8 -r html -r text -r lcov --exclude src/test uvu src/test/js"
+    "test:unit": "c8 -r html -r text -r lcov --exclude src/test -o ./target/coverage uvu -r tsm src/test/ts",
+    "test:bench": "node src/test/bench/index.mjs"
   },
   "files": [
-    "src/main",
+    "target/cjs",
+    "target/mjs",
+    "target/dts",
     "README.md",
     "package.json"
   ],
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/semrel-extra/toposource.git"
   },
   "devDependencies": {
+    "@types/node": "^18.14.0",
+    "@types/toposort": "^2.0.3",
+    "benchmark": "^2.1.4",
     "c8": "^7.12.0",
+    "concurrently": "^7.6.0",
+    "esbuild": "^0.17.8",
+    "esbuild-node-externals": "^1.6.0",
     "eslint": "^8.32.0",
     "eslint-config-qiwi": "^2.0.8",
+    "toposort": "^2.0.2",
+    "tsm": "^2.3.0",
     "typescript": "^4.9.4",
     "uvu": "^0.5.6"
   },
@@ -41,6 +64,9 @@
     "dependencies",
     "acyclic"
   ],
-  "author": "Choro Abdymanapov <oljekechoro@mail.ru>",
+  "contributors": [
+    "Choro Abdymanapov <oljekechoro@mail.ru>",
+    "Anton Golub <antongolub@antongolub.com>"
+  ],
   "license": "MIT"
 }
