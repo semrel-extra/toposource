@@ -25,7 +25,8 @@
     "format": "yarn test:lint --fix",
     "test": "concurrently 'npm:test:*'",
     "test:lint": "eslint -c src/test/lint/.eslintrc.json src",
-    "test:unit": "c8 -r html -r text -r lcov --exclude src/test -o ./target/coverage uvu -r tsm src/test/ts",
+    "test:unit": "c8 -r html -r text -r lcov --exclude ./src/test -o ./target/coverage uvu -r tsm src/test/ts",
+    "test:it": "uvu -r tsm src/test/js",
     "test:bench": "node src/test/bench/index.mjs"
   },
   "files": [
