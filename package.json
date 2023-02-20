@@ -17,13 +17,14 @@
   },
   "scripts": {
     "build": "concurrently 'npm:build:*'",
-    "build:esm": "node ./build.cjs && rename -f 's/\\.js$/\\.mjs/' target/esm/*.js",
-    "build:cjs": "node ./build.cjs --cjs",
+    "build:esm": "node ./src/scripts/build.cjs && rename -f 's/\\.js$/\\.mjs/' target/esm/*.js",
+    "build:cjs": "node ./src/scripts/build.cjs --cjs",
     "build:dts": "tsc --emitDeclarationOnly --outDir target/dts",
-    "lint": "eslint src",
-    "lint:fix": "yarn style --fix",
-    "verify": "yarn lint && yarn test",
-    "test": "yarn test:unit",
+    "build:docs": "typedoc --options src/main/typedoc",
+    "lint": "eslint -c src/test/lint/.eslintrc.json src",
+    "format": "yarn test:lint --fix",
+    "test": "concurrently 'npm:test:*'",
+    "test:lint": "eslint -c src/test/lint/.eslintrc.json src",
     "test:unit": "c8 -r html -r text -r lcov --exclude src/test -o ./target/coverage uvu -r tsm src/test/ts",
     "test:bench": "node src/test/bench/index.mjs"
   },
@@ -50,6 +51,7 @@
     "eslint-config-qiwi": "^2.0.8",
     "toposort": "^2.0.2",
     "tsm": "^2.3.0",
+    "typedoc": "^0.23.25",
     "typescript": "^4.9.4",
     "uvu": "^0.5.6"
   },
