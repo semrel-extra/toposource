@@ -37,10 +37,6 @@ typings/
 flow-typed/
 buildstamp.json
 
-# Docs
-docs
-doc
-
 # Deps
 node_modules
 jspm_packages
