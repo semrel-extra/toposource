@@ -23,6 +23,32 @@ test('toposort', () => {
       }
     ],
     [
+      [['a', 'b'], ['b', 'c'], ['c', 'd'], ['d', 'e'], ['f', 'e'], ['g', 'f'], ['h', 'g']],
+      {
+        next: new Map()
+          .set('a', ['b'])
+          .set('b', ['c'])
+          .set('c', ['d'])
+          .set('d', ['e'])
+          .set('f', ['e'])
+          .set('g', ['f'])
+          .set('h', ['g']),
+        prev: new Map()
+          .set('b', ['a'])
+          .set('c', ['b'])
+          .set('d', ['c'])
+          .set('e', ['d', 'f'])
+          .set('f', ['g'])
+          .set('g', ['h']),
+        sources: [ 'a', 'h' ],
+        queue: ['a', 'h', 'b', 'g', 'c', 'f', 'd', 'e'],
+        graphs: [{
+          sources: ['a', 'h'],
+          nodes: new Set(['a', 'h', 'b', 'g', 'c', 'f', 'd', 'e'])
+        }]
+      }
+    ],
+    [
       [['a', 'b'], ['b', 'c'], ['d', 'c'], ['e', 'f']],
       {
         next: new Map()
