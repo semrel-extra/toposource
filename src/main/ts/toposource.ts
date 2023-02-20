@@ -82,14 +82,9 @@ const mergeNested = (nodes: Set<string>, deps: TDepMap): Set<string> => {
 
 export const checkLoop = (next: Map<string, string[]>): void => {
   for (const [node, children] of next) {
-    const _children = new Set(children)
-    for (const child of _children) {
-      if (_children.has(node)) {
-        throw new Error('Loop detected');
-      }
-      for (const _child of next.get(child) || []) {
-        _children.add(_child)
-      }
+    const desc = mergeNested(new Set(children), next)
+    if (desc.has(node)) {
+      throw new Error('Loop detected');
     }
   }
 }
