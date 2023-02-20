@@ -23,17 +23,7 @@ export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptio
   } as ReturnType<TAnalyze>
 }
 
-const getQueue = (sources: string[], next: TDepMap) => {
-  const queue = new Set(sources)
-
-  for (const source of queue) {
-    for (const child of next.get(source) || []) {
-      queue.add(child)
-    }
-  }
-
-  return [...queue.values()]
-}
+const getQueue = (sources: string[], next: TDepMap) => [...mergeNested(new Set(sources), next).values()]
 
 const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
@@ -62,13 +52,7 @@ const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) 
   const graphs: TGraph[] = []
 
   for (const source of sources) {
-    const nodes = new Set([source])
-
-    for (const node of nodes) {
-      for (const child of next.get(node) || []) {
-        nodes.add(child)
-      }
-    }
+    const nodes = mergeNested(new Set([source]), next)
     const values = [...nodes.values()]
     const same = graphs.find(_graph => [..._graph.nodes.values()].some(node => values.includes(node)))
 
@@ -84,6 +68,16 @@ const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) 
   }
 
   return graphs
+}
+
+const mergeNested = (nodes: Set<string>, deps: TDepMap): Set<string> => {
+  for (const node of nodes) {
+    for (const child of deps.get(node) || []) {
+      nodes.add(child)
+    }
+  }
+
+  return nodes
 }
 
 export const checkLoop = (next: Map<string, string[]>): void => {

@@ -94,7 +94,7 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageLocations: |
-            ${{github.workspace}}/target/coverage/*.lcov:lcov
+            ${{github.workspace}}/target/coverage/lcov.info:lcov
 
       - name: Semantic Release
         env:
