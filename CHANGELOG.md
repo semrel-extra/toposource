@@ -1,3 +1,8 @@
+## [1.1.1](https://github.com/semrel-extra/toposource/compare/v1.1.0...v1.1.1) (2023-02-23)
+
+### Fixes & improvements
+* fix: relax edges type ([a4356fd](https://github.com/semrel-extra/toposource/commit/a4356fd7517e1469d0be4599e5ad85521539a8bf))
+
 ## [1.1.0](https://github.com/semrel-extra/toposource/compare/v1.0.3...v1.1.0) (2023-02-23)
 
 ### Features
