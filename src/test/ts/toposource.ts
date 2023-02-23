@@ -1,10 +1,10 @@
 import { test } from 'uvu'
 import assert from 'node:assert'
 
-import toposort from 'toposort'
+// import toposort from 'toposort'
 import { analyze, checkLoop } from '../../main/ts/toposource'
 
-test('toposort', () => {
+test('toposource', () => {
   const cases: [[string, string][], ReturnType<typeof analyze>][] = [
     [
       [['a', 'c'], ['e', 'c']],

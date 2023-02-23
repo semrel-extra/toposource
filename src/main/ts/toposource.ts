@@ -49,19 +49,17 @@ const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
 const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
   const prev = new Map<string, string[]>()
+  const pushHop = (deps: TDepMap, a: string, b: string) => {
+    if (deps.has(a)) {
+      deps.get(a)!.push(b)
+    } else {
+      deps.set(a, [b])
+    }
+  }
 
   for (const [from, to] of edges) {
-    if (next.has(from)) {
-      next.get(from)!.push(to)
-    } else {
-      next.set(from, [to])
-    }
-
-    if (prev.has(to)) {
-      prev.get(to)!.push(from)
-    } else {
-      prev.set(to, [from])
-    }
+    pushHop(next, from, to)
+    pushHop(prev, to, from)
   }
   return { next, prev }
 }
@@ -98,7 +96,7 @@ export const checkLoop = (next: Map<string, string[]>): void => {
   }
 }
 
-const pushToSet = <T extends Set<any>>(set: T, ...items: string[]): T => {
+const pushToSet = (set: Set<string>, ...items: string[]): Set<string> => {
   for (const item of items) {
     set.add(item)
   }
