@@ -65,7 +65,9 @@
     "dependency",
     "list",
     "dependencies",
-    "acyclic"
+    "directed",
+    "acyclic",
+    "dag"
   ],
   "contributors": [
     "Choro Abdymanapov <oljekechoro@mail.ru>",

@@ -37,6 +37,7 @@ analyze([['a', 'b'], ['b', 'c'], ['d', 'c'], ['e', 'f']])
 
 ## Alternatives
 * [toposort](https://github.com/marcelklehr/toposort)
+* [batching-toposort](https://github.com/glebec/batching-toposort)
 
 ## License
 [MIT](./LICENSE)
