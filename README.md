@@ -12,15 +12,17 @@ import { analyze } from 'toposource'
 analyze([['a', 'b'], ['b', 'c'], ['d', 'c'], ['e', 'f']])
 // →
 {
-  next: new Map()
-    .set('a', ['b'])
-    .set('b', ['c'])
-    .set('d', ['c'])
-    .set('e', ['f']),
-  prev: new Map()
-    .set('b', ['a'])
-    .set('c', ['b', 'd'])
-    .set('f', ['e']),
+  next: new Map([
+    ['a', ['b']],
+    ['b', ['c']],
+    ['d', ['c']],
+    ['e', ['f']]
+  ]),
+  prev: new Map([
+    ['b', ['a']],
+    ['c', ['b', 'd']],
+    ['f', ['e']]
+  ]),
   sources: [ 'a', 'd', 'e' ],
   queue: ['a', 'd', 'e', 'b', 'c', 'f'],
   graphs: [{

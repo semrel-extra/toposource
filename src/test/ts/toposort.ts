@@ -9,11 +9,13 @@ test('toposort', () => {
     [
       [['a', 'c'], ['e', 'c']],
       {
-        next: new Map()
-          .set('a', ['c'])
-          .set('e', ['c']),
-        prev: new Map()
-          .set('c', ['a', 'e']),
+        next: new Map([
+          ['a', ['c']],
+          ['e', ['c']]
+        ]),
+        prev: new Map([
+          ['c', ['a', 'e']]
+        ]),
         sources: [ 'a', 'e' ],
         queue: ['a', 'e', 'c'],
         graphs: [{
@@ -25,21 +27,23 @@ test('toposort', () => {
     [
       [['a', 'b'], ['b', 'c'], ['c', 'd'], ['d', 'e'], ['f', 'e'], ['g', 'f'], ['h', 'g']],
       {
-        next: new Map()
-          .set('a', ['b'])
-          .set('b', ['c'])
-          .set('c', ['d'])
-          .set('d', ['e'])
-          .set('f', ['e'])
-          .set('g', ['f'])
-          .set('h', ['g']),
-        prev: new Map()
-          .set('b', ['a'])
-          .set('c', ['b'])
-          .set('d', ['c'])
-          .set('e', ['d', 'f'])
-          .set('f', ['g'])
-          .set('g', ['h']),
+        next: new Map([
+          ['a', ['b']],
+          ['b', ['c']],
+          ['c', ['d']],
+          ['d', ['e']],
+          ['f', ['e']],
+          ['g', ['f']],
+          ['h', ['g']]
+        ]),
+        prev: new Map([
+          ['b', ['a']],
+          ['c', ['b']],
+          ['d', ['c']],
+          ['e', ['d', 'f']],
+          ['f', ['g']],
+          ['g', ['h']],
+        ]),
         sources: [ 'a', 'h' ],
         queue: ['a', 'h', 'b', 'g', 'c', 'f', 'd', 'e'],
         graphs: [{
@@ -49,17 +53,39 @@ test('toposort', () => {
       }
     ],
     [
+      [['a', 'b'], ['c', 'd'], ['d', 'b']],
+      {
+        next: new Map([
+          ['a', ['b']],
+          ['c', ['d']],
+          ['d', ['b']]
+        ]),
+        prev: new Map([
+          ['b', ['a', 'd']],
+          ['d', ['c']]
+        ]),
+        sources: [ 'a', 'c' ],
+        queue: ['a', 'c', 'd', 'b'],
+        graphs: [{
+          sources: ['a', 'c'],
+          nodes: new Set(['a', 'c', 'd', 'b'])
+        }]
+      }
+    ],
+    [
       [['a', 'b'], ['b', 'c'], ['d', 'c'], ['e', 'f']],
       {
-        next: new Map()
-          .set('a', ['b'])
-          .set('b', ['c'])
-          .set('d', ['c'])
-          .set('e', ['f']),
-        prev: new Map()
-          .set('b', ['a'])
-          .set('c', ['b', 'd'])
-          .set('f', ['e']),
+        next: new Map([
+          ['a', ['b']],
+          ['b', ['c']],
+          ['d', ['c']],
+          ['e', ['f']]
+        ]),
+        prev: new Map([
+          ['b', ['a']],
+          ['c', ['b', 'd']],
+          ['f', ['e']]
+        ]),
         sources: [ 'a', 'd', 'e' ],
         queue: ['a', 'd', 'e', 'b', 'c', 'f'],
         graphs: [{
@@ -81,27 +107,31 @@ test('toposort', () => {
 test('checkLoop() detects loops', () => {
   const cases: [Map<string, string[]>, string?][] = [
     [
-      new Map()
-        .set('a', ['b'])
-        .set('b', ['c'])
-        .set('c', ['a']),
+      new Map([
+        ['a', ['b']],
+        ['b', ['c']],
+        ['c', ['a']]
+      ]),
+
+      'Loop detected'
+    ],
+    [
+      new Map([
+        ['a', ['c']],
+        ['b', ['c']],
+        ['c', ['c']]
+      ]),
       'Loop detected'
     ],
     [
       new Map()
-        .set('a', ['c'])
-        .set('b', ['c'])
-        .set('c', ['c']),
-      'Loop detected'
     ],
     [
-      new Map()
-    ],
-    [
-      new Map()
-        .set('a', ['b', 'c'])
-        .set('b', ['d'])
-        .set('c', ['d'])
+      new Map([
+        ['a', ['b', 'c']],
+        ['b', ['d']],
+        ['c', ['d']]
+      ])
     ],
   ]
 

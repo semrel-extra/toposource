@@ -12,7 +12,7 @@ export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptio
 
   const sources = getSources(_edges)
   const graphs = opts.graphs ? getGraphs(_edges, sources, next) : undefined
-  const queue = opts.queue ? getQueue(sources, next) : undefined
+  const queue = opts.queue ? getQueue(sources, next, prev) : undefined
 
   return {
     next,
@@ -23,7 +23,28 @@ export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptio
   } as ReturnType<TAnalyze>
 }
 
-const getQueue = (sources: string[], next: TDepMap) => [...mergeNested(new Set(sources), next).values()]
+const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
+  const nodes = new Set()
+  const todo = [...sources]
+  const batch: Set<string> = new Set()
+
+  for (const [i, node] of todo.entries()) {
+    if ((prev.get(node) || []).every((p) => nodes.has(p))) {
+      nodes.add(node)
+      pushToSet(batch, ...(next.get(node) || []))
+
+    } else {
+      pushToSet(batch, node)
+    }
+
+    if (i === todo.length - 1) {
+      todo.push(...batch.values())
+      batch.clear()
+    }
+  }
+
+  return [...nodes.values()]
+}
 
 const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
@@ -58,9 +79,7 @@ const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) 
 
     if (same) {
       same.sources.push(source)
-      for (const value of values) {
-        same.nodes.add(value)
-      }
+      pushToSet(same.nodes, ...values)
       continue
     }
 
@@ -70,16 +89,6 @@ const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) 
   return graphs
 }
 
-const mergeNested = (nodes: Set<string>, deps: TDepMap): Set<string> => {
-  for (const node of nodes) {
-    for (const child of deps.get(node) || []) {
-      nodes.add(child)
-    }
-  }
-
-  return nodes
-}
-
 export const checkLoop = (next: Map<string, string[]>): void => {
   for (const [node, children] of next) {
     const desc = mergeNested(new Set(children), next)
@@ -87,4 +96,18 @@ export const checkLoop = (next: Map<string, string[]>): void => {
       throw new Error('Loop detected');
     }
   }
+}
+
+const pushToSet = <T extends Set<any>>(set: T, ...items: string[]): T => {
+  for (const item of items) {
+    set.add(item)
+  }
+  return set
+}
+
+const mergeNested = (nodes: Set<string>, deps: TDepMap): Set<string> => {
+  for (const node of nodes) {
+    pushToSet(nodes, ...(deps.get(node) || []))
+  }
+  return nodes
 }
