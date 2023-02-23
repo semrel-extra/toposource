@@ -1,3 +1,8 @@
+## [1.0.2](https://github.com/semrel-extra/toposource/compare/v1.0.1...v1.0.2) (2023-02-23)
+
+### Fixes & improvements
+* refactor: simplify hops resolver ([72b4fb9](https://github.com/semrel-extra/toposource/commit/72b4fb92fe1055405801ff977f1022256f598176))
+
 ## [1.0.1](https://github.com/semrel-extra/toposource/compare/v1.0.0...v1.0.1) (2023-02-23)
 
 ### Fixes & improvements
