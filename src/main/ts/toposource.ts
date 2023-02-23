@@ -23,6 +23,27 @@ export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptio
   } as ReturnType<TAnalyze>
 }
 
+const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
+  const next = new Map<string, string[]>()
+  const prev = new Map<string, string[]>()
+  const pushHop = (deps: TDepMap, a: string, b: string) => {
+    if (deps.has(a)) {
+      deps.get(a)!.push(b)
+    } else {
+      deps.set(a, [b])
+    }
+  }
+
+  for (const [from, to] of edges) {
+    pushHop(next, from, to)
+    pushHop(prev, to, from)
+  }
+  return { next, prev }
+}
+
+const getSources = (edges: [string, string][]): string[] => [...new Set(edges.map(([from]) => from))]
+  .filter(node => edges.every(([,to]) => to !== node))
+
 const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
   const nodes = new Set()
   const todo = [...sources]
@@ -45,27 +66,6 @@ const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
 
   return [...nodes.values()]
 }
-
-const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
-  const next = new Map<string, string[]>()
-  const prev = new Map<string, string[]>()
-  const pushHop = (deps: TDepMap, a: string, b: string) => {
-    if (deps.has(a)) {
-      deps.get(a)!.push(b)
-    } else {
-      deps.set(a, [b])
-    }
-  }
-
-  for (const [from, to] of edges) {
-    pushHop(next, from, to)
-    pushHop(prev, to, from)
-  }
-  return { next, prev }
-}
-
-const getSources = (edges: [string, string][]): string[] => [...new Set(edges.map(([from]) => from))]
-  .filter(node => edges.every(([,to]) => to !== node))
 
 const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) => {
   const graphs: TGraph[] = []
@@ -91,7 +91,7 @@ export const checkLoop = (next: Map<string, string[]>): void => {
   for (const [node, children] of next) {
     const desc = mergeNested(new Set(children), next)
     if (desc.has(node)) {
-      throw new Error('Loop detected');
+      throw new Error('Loop detected')
     }
   }
 }
