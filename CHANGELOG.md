@@ -1,3 +1,8 @@
+## [1.1.0](https://github.com/semrel-extra/toposource/compare/v1.0.3...v1.1.0) (2023-02-23)
+
+### Features
+* feat: handle single nodes ([1272746](https://github.com/semrel-extra/toposource/commit/12727463add0883cb05fa7a62861b779ec7ce8fe))
+
 ## [1.0.3](https://github.com/semrel-extra/toposource/compare/v1.0.2...v1.0.3) (2023-02-23)
 
 ### Fixes & improvements
