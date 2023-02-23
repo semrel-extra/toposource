@@ -2,10 +2,11 @@ import {
   TAnalyze,
   TAnalyzeOptions,
   TDepMap,
+  TEdges,
   TGraph
 } from './interface'
 
-export const analyze: TAnalyze = (edges: [string, string?][], opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
+export const analyze: TAnalyze = (edges: TEdges, opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
   const _edges = opts.strict ? [...edges].sort() : edges
   const { next, prev } = getHops(_edges)
   opts.check && checkLoop(next)
@@ -23,7 +24,7 @@ export const analyze: TAnalyze = (edges: [string, string?][], opts: TAnalyzeOpti
   } as ReturnType<TAnalyze>
 }
 
-const getHops = (edges: [string, string?][]): {next: TDepMap, prev: TDepMap} => {
+const getHops = (edges: TEdges): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
   const prev = new Map<string, string[]>()
   const pushHop = (deps: TDepMap, a: string, b: string) => {
@@ -43,7 +44,7 @@ const getHops = (edges: [string, string?][]): {next: TDepMap, prev: TDepMap} => 
   return { next, prev }
 }
 
-const getSources = (edges: [string, string?][]): string[] => [...new Set(edges.map(([from]) => from))]
+const getSources = (edges: TEdges): string[] => [...new Set(edges.map(([from]) => from))]
   .filter(node => edges.every(([,to]) => to !== node))
 
 const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
@@ -89,7 +90,7 @@ const getGraphs = (sources: string[], next: TDepMap) => {
   return graphs
 }
 
-export const checkLoop = (next: Map<string, string[]>): void => {
+export const checkLoop = (next: TDepMap): void => {
   for (const [node, children] of next) {
     const desc = mergeNested(new Set(children), next)
     if (desc.has(node)) {
