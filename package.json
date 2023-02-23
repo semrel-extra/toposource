@@ -31,7 +31,7 @@
   },
   "files": [
     "target/cjs",
-    "target/mjs",
+    "target/esm",
     "target/dts",
     "README.md",
     "package.json"
