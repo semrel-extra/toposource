@@ -1,3 +1,8 @@
+## [1.0.3](https://github.com/semrel-extra/toposource/compare/v1.0.2...v1.0.3) (2023-02-23)
+
+### Fixes & improvements
+* fix: fix esm entry point ([b693bf6](https://github.com/semrel-extra/toposource/commit/b693bf676a396170dca5319c20218d3e01b2baaf))
+
 ## [1.0.2](https://github.com/semrel-extra/toposource/compare/v1.0.1...v1.0.2) (2023-02-23)
 
 ### Fixes & improvements
