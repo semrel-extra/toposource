@@ -5,7 +5,7 @@ import assert from 'node:assert'
 import { analyze, checkLoop } from '../../main/ts/toposource'
 
 test('toposource', () => {
-  const cases: [[string, string][], ReturnType<typeof analyze>][] = [
+  const cases: [[string, string?][], ReturnType<typeof analyze>][] = [
     [
       [['a', 'c'], ['e', 'c']],
       {
@@ -21,6 +21,26 @@ test('toposource', () => {
         graphs: [{
           sources: ['a', 'e'],
           nodes: new Set(['a', 'c', 'e'])
+        }]
+      }
+    ],
+    [
+      [['a', 'b'], ['c']],
+      {
+        next: new Map([
+          ['a', ['b']],
+        ]),
+        prev: new Map([
+          ['b', ['a']]
+        ]),
+        sources: [ 'a', 'c' ],
+        queue: ['a', 'c', 'b'],
+        graphs: [{
+          sources: ['a'],
+          nodes: new Set(['a', 'b'])
+        }, {
+          sources: ['c'],
+          nodes: new Set(['c'])
         }]
       }
     ],

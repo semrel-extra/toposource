@@ -5,13 +5,13 @@ import {
   TGraph
 } from './interface'
 
-export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
+export const analyze: TAnalyze = (edges: [string, string?][], opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
   const _edges = opts.strict ? [...edges].sort() : edges
   const { next, prev } = getHops(_edges)
   opts.check && checkLoop(next)
 
   const sources = getSources(_edges)
-  const graphs = opts.graphs ? getGraphs(_edges, sources, next) : undefined
+  const graphs = opts.graphs ? getGraphs(sources, next) : undefined
   const queue = opts.queue ? getQueue(sources, next, prev) : undefined
 
   return {
@@ -23,7 +23,7 @@ export const analyze: TAnalyze = (edges: [string, string][], opts: TAnalyzeOptio
   } as ReturnType<TAnalyze>
 }
 
-const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
+const getHops = (edges: [string, string?][]): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
   const prev = new Map<string, string[]>()
   const pushHop = (deps: TDepMap, a: string, b: string) => {
@@ -35,13 +35,15 @@ const getHops = (edges: [string, string][]): {next: TDepMap, prev: TDepMap} => {
   }
 
   for (const [from, to] of edges) {
-    pushHop(next, from, to)
-    pushHop(prev, to, from)
+    if (to) {
+      pushHop(next, from, to)
+      pushHop(prev, to, from)
+    }
   }
   return { next, prev }
 }
 
-const getSources = (edges: [string, string][]): string[] => [...new Set(edges.map(([from]) => from))]
+const getSources = (edges: [string, string?][]): string[] => [...new Set(edges.map(([from]) => from))]
   .filter(node => edges.every(([,to]) => to !== node))
 
 const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
@@ -67,7 +69,7 @@ const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
   return [...nodes.values()]
 }
 
-const getGraphs = (edges: [string, string][], sources: string[], next: TDepMap) => {
+const getGraphs = (sources: string[], next: TDepMap) => {
   const graphs: TGraph[] = []
 
   for (const source of sources) {
