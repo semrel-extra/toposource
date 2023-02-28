@@ -44,7 +44,6 @@ bower_components
 
 #IDE
 .idea
-.idea/
 
 # Yarn Integrity file
 .yarn-integrity
