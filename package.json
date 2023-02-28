@@ -1,6 +1,6 @@
 {
   "name": "toposource",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Directed graphs analyzer for parallel traversals",
   "main": "./target/cjs/index.js",
   "module": "./target/esm/index.mjs",

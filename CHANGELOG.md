@@ -1,3 +1,8 @@
+## [1.1.2](https://github.com/semrel-extra/toposource/compare/v1.1.1...v1.1.2) (2023-02-28)
+
+### Fixes & improvements
+* docs: mention more alternatives ([32fc772](https://github.com/semrel-extra/toposource/commit/32fc772df02a0b0afaeefa1f0bd5559f85c966a1))
+
 ## [1.1.1](https://github.com/semrel-extra/toposource/compare/v1.1.0...v1.1.1) (2023-02-23)
 
 ### Fixes & improvements
