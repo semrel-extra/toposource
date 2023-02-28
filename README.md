@@ -38,6 +38,9 @@ analyze([['a', 'b'], ['b', 'c'], ['d', 'c'], ['e', 'f']])
 ## Alternatives
 * [toposort](https://github.com/marcelklehr/toposort)
 * [batching-toposort](https://github.com/glebec/batching-toposort)
+* [js-graph-algorithms](https://github.com/chen0040/js-graph-algorithms)
+* [topology-runner](https://github.com/smartprocure/topology-runner)
+* [graph-data-structure]https://github.com/datavis-tech/graph-data-structure
 
 ## License
 [MIT](./LICENSE)
