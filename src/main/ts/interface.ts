@@ -9,6 +9,14 @@ export type TGraph = {
 
 export type TEdges = ([string, string?] | [string])[]
 
+export type TTopoResult = {
+  next: TDepMap
+  prev: TDepMap
+  sources: string[]
+  queue: string[]
+  graphs: TGraph[]
+}
+
 export type TAnalyze = {
   <O extends TAnalyzeOptions = TAnalyzeOptions>(edges: TEdges, opts: O):
     {
@@ -18,11 +26,5 @@ export type TAnalyze = {
       queue: O extends {queue: true} ? string[] : undefined
       graphs: O extends {graphs: true} ? TGraph[] : undefined
     }
-  (edges: TEdges): {
-    next: TDepMap
-    prev: TDepMap
-    sources: string[]
-    queue: string[]
-    graphs: TGraph[]
-  }
+  (edges: TEdges): TTopoResult
 }
