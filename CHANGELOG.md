@@ -1,3 +1,8 @@
+## [1.1.3](https://github.com/semrel-extra/toposource/compare/v1.1.2...v1.1.3) (2023-03-26)
+
+### Fixes & improvements
+* perf: expose TTopoResult type ([9b6d19a](https://github.com/semrel-extra/toposource/commit/9b6d19a588803033ec926789009cc4ef6fa0f379))
+
 ## [1.1.2](https://github.com/semrel-extra/toposource/compare/v1.1.1...v1.1.2) (2023-02-28)
 
 ### Fixes & improvements
