@@ -6,7 +6,7 @@ const esmConfig = {
   outdir: './target/esm',
   bundle: true,
   minify: false,
-  sourcemap: false,
+  sourcemap: true,
   platform: 'node',
   target: 'ES2020',
   format: 'esm',
