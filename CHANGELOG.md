@@ -1,3 +1,8 @@
+## [1.1.4](https://github.com/semrel-extra/toposource/compare/v1.1.3...v1.1.4) (2023-04-26)
+
+### Fixes & improvements
+* perf: enable npm provenance ([285d4c3](https://github.com/semrel-extra/toposource/commit/285d4c33eec5f7f66bb0c3138b0cc58611777687))
+
 ## [1.1.3](https://github.com/semrel-extra/toposource/compare/v1.1.2...v1.1.3) (2023-03-26)
 
 ### Fixes & improvements
