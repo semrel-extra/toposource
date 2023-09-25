@@ -29,7 +29,7 @@ const getHops = (edges: TEdges): {next: TDepMap, prev: TDepMap} => {
   const prev = new Map<string, string[]>()
   const pushHop = (deps: TDepMap, a: string, b: string) => {
     if (deps.has(a)) {
-      deps.get(a)!.push(b)
+      (deps.get(a) as string[]).push(b)
     } else {
       deps.set(a, [b])
     }

@@ -41,19 +41,19 @@
     "url": "https://github.com/semrel-extra/toposource.git"
   },
   "devDependencies": {
-    "@types/node": "^18.16.1",
-    "@types/toposort": "^2.0.3",
+    "@types/node": "^20.6.5",
+    "@types/toposort": "^2.0.4",
     "benchmark": "^2.1.4",
-    "c8": "^7.13.0",
-    "concurrently": "^8.0.1",
-    "esbuild": "^0.19.0",
-    "esbuild-node-externals": "^1.7.0",
-    "eslint": "^8.39.0",
+    "c8": "^8.0.1",
+    "concurrently": "^8.2.1",
+    "esbuild": "^0.19.3",
+    "esbuild-node-externals": "^1.9.0",
+    "eslint": "^8.50.0",
     "eslint-config-qiwi": "^2.1.1",
     "toposort": "^2.0.2",
     "tsm": "^2.3.0",
-    "typedoc": "^0.25.0",
-    "typescript": "^5.0.4",
+    "typedoc": "^0.25.1",
+    "typescript": "^5.2.2",
     "uvu": "^0.5.6"
   },
   "keywords": [
