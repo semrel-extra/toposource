@@ -52,7 +52,7 @@
     "eslint-config-qiwi": "^2.1.1",
     "toposort": "^2.0.2",
     "tsm": "^2.3.0",
-    "typedoc": "^0.24.6",
+    "typedoc": "^0.25.0",
     "typescript": "^5.0.4",
     "uvu": "^0.5.6"
   },
