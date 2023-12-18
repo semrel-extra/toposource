@@ -132,8 +132,7 @@ test('checkLoop() detects loops', () => {
         ['b', ['c']],
         ['c', ['a']]
       ]),
-
-      'Loop detected'
+      'Loop detected: a,b,c,a'
     ],
     [
       new Map([
@@ -141,7 +140,7 @@ test('checkLoop() detects loops', () => {
         ['b', ['c']],
         ['c', ['c']]
       ]),
-      'Loop detected'
+      'Loop detected: c,c'
     ],
     [
       new Map()
@@ -157,7 +156,10 @@ test('checkLoop() detects loops', () => {
 
   cases.forEach(([next, err]) => {
     if (err) {
-      assert.throws(() => checkLoop(next), Error, err)
+      assert.throws(() => checkLoop(next), {
+        name: 'Error',
+        message: err
+      }, err)
       return
     }
 

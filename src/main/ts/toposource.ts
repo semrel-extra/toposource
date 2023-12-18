@@ -94,7 +94,7 @@ export const checkLoop = (next: TDepMap): void => {
   for (const [node, children] of next) {
     const desc = mergeNested(new Set(children), next)
     if (desc.has(node)) {
-      throw new Error('Loop detected')
+      throw new Error(`Loop detected: ${[node,...desc.values()]}`)
     }
   }
 }
