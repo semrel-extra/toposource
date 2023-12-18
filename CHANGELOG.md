@@ -1,3 +1,8 @@
+## [1.2.0](https://github.com/semrel-extra/toposource/compare/v1.1.4...v1.2.0) (2023-12-18)
+
+### Features
+* feat: provide more descriptive loop error ([51a5364](https://github.com/semrel-extra/toposource/commit/51a53643fefb70ae59820c2f30b87c6f08164107))
+
 ## [1.1.4](https://github.com/semrel-extra/toposource/compare/v1.1.3...v1.1.4) (2023-04-26)
 
 ### Fixes & improvements
