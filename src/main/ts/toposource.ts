@@ -9,7 +9,7 @@ import {
 export const analyze: TAnalyze = (edges: TEdges, opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
   const _edges = opts.strict ? [...edges].sort() : edges
   const { next, prev } = getHops(_edges)
-  opts.check && checkLoop(next)
+  if (opts.check) checkLoop(next)
 
   const sources = getSources(_edges)
   const graphs = opts.graphs ? getGraphs(sources, next) : undefined

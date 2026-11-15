@@ -1,6 +1,0 @@
-{
-  "extends": ["eslint-config-qiwi"],
-  "rules": {
-    "unicorn/no-object-as-default-parameter": "off"
-  }
-}

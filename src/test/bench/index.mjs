@@ -1,4 +1,4 @@
-import assert from 'node:assert'
+// import assert from 'node:assert'
 import Benchmark from 'benchmark'
 import toposort from 'toposort'
 import {analyze} from '../../../target/esm/index.mjs'
