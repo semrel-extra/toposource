@@ -71,31 +71,31 @@ const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
   return [...nodes.values()]
 }
 
-const getGraphs = (sources: string[], next: TDepMap) => {
-  const graphs: TGraph[] = []
-  const order = new Map(sources.map((source, i) => [source, i]))
+const getGraphs = (sources: string[], next: TDepMap): TGraph[] => {
+  const graphs: Set<string>[] = []
 
   for (const source of sources) {
     const nodes = mergeNested(new Set([source]), next)
+    const values = [...nodes]
     // A source may reach several graphs at once: they all are one component now.
-    const [graph, ...linked] = graphs.filter(_graph => [...nodes].some(node => _graph.nodes.has(node)))
+    const [graph, ...linked] = graphs.filter(_graph => values.some(node => _graph.has(node)))
 
     if (!graph) {
-      graphs.push({nodes, sources: [source]})
+      graphs.push(nodes)
       continue
     }
 
     for (const _graph of linked) {
-      pushToSet(graph.nodes, ..._graph.nodes)
-      graph.sources.push(..._graph.sources)
+      pushToSet(graph, ..._graph)
       graphs.splice(graphs.indexOf(_graph), 1)
     }
-    pushToSet(graph.nodes, ...nodes)
-    graph.sources.push(source)
-    graph.sources.sort((a, b) => (order.get(a) as number) - (order.get(b) as number))
+    pushToSet(graph, ...nodes)
   }
 
-  return graphs
+  return graphs.map(nodes => ({
+    nodes,
+    sources: sources.filter(source => nodes.has(source))
+  }))
 }
 
 export const checkLoop = (next: TDepMap): void => {
