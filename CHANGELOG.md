@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/semrel-extra/toposource/compare/v1.2.0...v1.2.1) (2026-11-19)
+
+### Fixes & improvements
+* refactor: simplify `getGraphs` ([00b6490](https://github.com/semrel-extra/toposource/commit/00b6490c4f03c3c42227257e02b1f5e30b712e39))
+* fix: merge graphs bridged by a later source ([53ae4d8](https://github.com/semrel-extra/toposource/commit/53ae4d87f6c0abf028e624d5c5d3358019fd1f78))
+
 ## [1.2.0](https://github.com/semrel-extra/toposource/compare/v1.1.4...v1.2.0) (2023-12-18)
 
 ### Features
