@@ -4,4 +4,3 @@ rules:
       policies:
         '*': hash-pin
         'actions/*': ref-pin
-        'github/codeql-action/*': ref-pin
