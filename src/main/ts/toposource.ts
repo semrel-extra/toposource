@@ -73,19 +73,26 @@ const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
 
 const getGraphs = (sources: string[], next: TDepMap) => {
   const graphs: TGraph[] = []
+  const order = new Map(sources.map((source, i) => [source, i]))
 
   for (const source of sources) {
     const nodes = mergeNested(new Set([source]), next)
-    const values = [...nodes.values()]
-    const same = graphs.find(_graph => [..._graph.nodes.values()].some(node => values.includes(node)))
+    // A source may reach several graphs at once: they all are one component now.
+    const [graph, ...linked] = graphs.filter(_graph => [...nodes].some(node => _graph.nodes.has(node)))
 
-    if (same) {
-      same.sources.push(source)
-      pushToSet(same.nodes, ...values)
+    if (!graph) {
+      graphs.push({nodes, sources: [source]})
       continue
     }
 
-    graphs.push({nodes, sources: [source]})
+    for (const _graph of linked) {
+      pushToSet(graph.nodes, ..._graph.nodes)
+      graph.sources.push(..._graph.sources)
+      graphs.splice(graphs.indexOf(_graph), 1)
+    }
+    pushToSet(graph.nodes, ...nodes)
+    graph.sources.push(source)
+    graph.sources.sort((a, b) => (order.get(a) as number) - (order.get(b) as number))
   }
 
   return graphs
