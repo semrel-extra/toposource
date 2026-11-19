@@ -1,3 +1,8 @@
+## [1.2.2](https://github.com/semrel-extra/toposource/compare/v1.2.1...v1.2.2) (2026-11-19)
+
+### Fixes & improvements
+* perf: find source nodes in linear time ([1e68dd6](https://github.com/semrel-extra/toposource/commit/1e68dd6f2204e71dc4c7ec600b77934869425fcf))
+
 ## [1.2.1](https://github.com/semrel-extra/toposource/compare/v1.2.0...v1.2.1) (2026-11-19)
 
 ### Fixes & improvements
