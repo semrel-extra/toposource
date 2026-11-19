@@ -1,8 +1,10 @@
 # toposource
-[![CI](https://github.com/semrel-extra/toposource/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/semrel-extra/toposource/actions/workflows/ci.yaml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/41fea7047ed5521e2075/maintainability)](https://codeclimate.com/github/semrel-extra/toposource/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/41fea7047ed5521e2075/test_coverage)](https://codeclimate.com/github/semrel-extra/toposource/test_coverage)
 > Directed graphs analyzer for parallel traversals
+
+[![CI](https://github.com/semrel-extra/toposource/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/semrel-extra/toposource/actions/workflows/ci.yaml)
+[![Maintainability](https://qlty.sh/gh/semrel-extra/projects/toposource/maintainability.svg)](https://qlty.sh/gh/semrel-extra/projects/toposource)
+[![Code Coverage](https://qlty.sh/gh/semrel-extra/projects/toposource/coverage.svg)](https://qlty.sh/gh/semrel-extra/projects/toposource)
+[![npm (tag)](https://img.shields.io/npm/v/toposource)](https://www.npmjs.com/package/toposource)
 
 ## Usage
 

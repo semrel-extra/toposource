@@ -1,23 +1,23 @@
 const esbuild = require('esbuild')
-const { nodeExternalsPlugin } = require('esbuild-node-externals')
 
 const esmConfig = {
   entryPoints: ['./src/main/ts/index.ts'],
   outdir: './target/esm',
+  outExtension: { '.js': '.mjs' },
   bundle: true,
+  packages: 'external',
   minify: false,
   sourcemap: true,
   platform: 'node',
   target: 'ES2020',
   format: 'esm',
-  plugins: [nodeExternalsPlugin()],
   tsconfig: './tsconfig.json'
 }
 
 const cjsConfig = {
   ...esmConfig,
   outdir: './target/cjs',
-  platform: 'node',
+  outExtension: { '.js': '.js' },
   target: 'es6',
   format: 'cjs',
 }

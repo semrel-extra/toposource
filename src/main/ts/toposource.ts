@@ -9,7 +9,7 @@ import {
 export const analyze: TAnalyze = (edges: TEdges, opts: TAnalyzeOptions = {graphs: true, queue: true, check: true, strict: true}) => {
   const _edges = opts.strict ? [...edges].sort() : edges
   const { next, prev } = getHops(_edges)
-  opts.check && checkLoop(next)
+  if (opts.check) checkLoop(next)
 
   const sources = getSources(_edges)
   const graphs = opts.graphs ? getGraphs(sources, next) : undefined
@@ -24,16 +24,17 @@ export const analyze: TAnalyze = (edges: TEdges, opts: TAnalyzeOptions = {graphs
   } as ReturnType<TAnalyze>
 }
 
+const pushHop = (deps: TDepMap, a: string, b: string) => {
+  if (deps.has(a)) {
+    (deps.get(a) as string[]).push(b)
+  } else {
+    deps.set(a, [b])
+  }
+}
+
 const getHops = (edges: TEdges): {next: TDepMap, prev: TDepMap} => {
   const next = new Map<string, string[]>()
   const prev = new Map<string, string[]>()
-  const pushHop = (deps: TDepMap, a: string, b: string) => {
-    if (deps.has(a)) {
-      (deps.get(a) as string[]).push(b)
-    } else {
-      deps.set(a, [b])
-    }
-  }
 
   for (const [from, to] of edges) {
     if (to) {

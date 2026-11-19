@@ -7,9 +7,9 @@
   "types": "./target/dts/index.d.ts",
   "exports": {
     ".": {
+      "types": "./target/dts/index.d.ts",
       "require": "./target/cjs/index.js",
-      "import": "./target/esm/index.mjs",
-      "types": "./target/dts/index.d.ts"
+      "import": "./target/esm/index.mjs"
     }
   },
   "publishConfig": {
@@ -17,16 +17,15 @@
   },
   "scripts": {
     "build": "node ./node_modules/.bin/concurrently 'npm:build:*'",
-    "build:esm": "node ./src/scripts/build.cjs && rename -f 's/\\.js$/\\.mjs/' target/esm/*.js",
+    "build:esm": "node ./src/scripts/build.cjs",
     "build:cjs": "node ./src/scripts/build.cjs --cjs",
     "build:dts": "tsc --emitDeclarationOnly --outDir target/dts",
-    "build:docs": "typedoc --options src/main/typedoc",
-    "lint": "eslint -c src/test/lint/.eslintrc.json src",
-    "format": "yarn test:lint --fix",
+    "lint": "oxlint src",
+    "format": "oxlint src --fix",
     "test": "node ./node_modules/.bin/concurrently 'npm:test:*'",
-    "test:lint": "eslint -c src/test/lint/.eslintrc.json src",
-    "test:unit": "c8 -r html -r text -r lcov --exclude ./src/test -o ./target/coverage uvu -r tsm src/test/ts",
-    "test:it": "uvu -r tsm src/test/js",
+    "test:lint": "oxlint src",
+    "test:unit": "c8 -r html -r text -r lcov --exclude 'src/test/**' -o ./target/coverage uvu -r tsx/cjs src/test/ts",
+    "test:it": "uvu src/test/js",
     "test:bench": "node src/test/bench/index.mjs"
   },
   "files": [
@@ -38,22 +37,19 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/semrel-extra/toposource.git"
+    "url": "git+https://github.com/semrel-extra/toposource.git"
   },
   "devDependencies": {
-    "@types/node": "^20.14.11",
+    "@types/node": "^26.6.6",
     "@types/toposort": "^2.0.7",
     "benchmark": "^2.1.4",
-    "c8": "^10.1.2",
-    "concurrently": "^8.2.2",
-    "esbuild": "^0.28.0",
-    "esbuild-node-externals": "^1.14.0",
-    "eslint": "^8.56.0",
-    "eslint-config-qiwi": "^2.1.3",
+    "c8": "^12.0.0",
+    "concurrently": "^10.0.7",
+    "esbuild": "^0.28.2",
+    "oxlint": "^1.93.0",
     "toposort": "^2.0.2",
-    "tsm": "^2.3.0",
-    "typedoc": "^0.28.0",
-    "typescript": "^5.5.3",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
     "uvu": "^0.5.6"
   },
   "keywords": [
@@ -73,5 +69,9 @@
     "Choro Abdymanapov <oljekechoro@mail.ru>",
     "Anton Golub <antongolub@antongolub.com>"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "resolutions": {
+    "glob": "^14.0.2",
+    "minimatch": "^11.0.1"
+  }
 }
