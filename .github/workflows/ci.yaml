@@ -79,6 +79,7 @@ jobs:
     # https://github.community/t/trigger-job-on-tag-push-only/18076
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: test_push
+    environment: gh-cicd
     runs-on: ubuntu-26.04
     permissions:
       checks: read

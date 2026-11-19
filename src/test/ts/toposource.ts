@@ -125,6 +125,13 @@ test('toposource', () => {
   })
 })
 
+test('toposource sources exclude targets and preserve first occurrence order', () => {
+  const edges: TEdges = [['b', 'c'], ['a', 'b'], ['z'], ['a', 'b'], ['z'], ['c']]
+
+  assert.deepStrictEqual(analyze(edges, {}).sources, ['a', 'z'])
+  assert.deepStrictEqual(analyze([]).sources, [])
+})
+
 test('checkLoop() detects loops', () => {
   const cases: [Map<string, string[]>, string?][] = [
     [

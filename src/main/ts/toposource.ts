@@ -45,8 +45,10 @@ const getHops = (edges: TEdges): {next: TDepMap, prev: TDepMap} => {
   return { next, prev }
 }
 
-const getSources = (edges: TEdges): string[] => [...new Set(edges.map(([from]) => from))]
-  .filter(node => edges.every(([,to]) => to !== node))
+const getSources = (edges: TEdges): string[] => {
+  const targets = new Set(edges.map(([,to]) => to))
+  return [...new Set(edges.map(([from]) => from))].filter(node => !targets.has(node))
+}
 
 const getQueue = (sources: string[], next: TDepMap, prev: TDepMap) => {
   const nodes = new Set()
