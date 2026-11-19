@@ -222,6 +222,19 @@ test('toposource merges graphs bridged by a later source', () => {
   })
 })
 
+test('toposource preserves source order when strict is disabled', () => {
+  const edges: TEdges = [
+    ['d', 'x'], ['z'], ['b', 'y'], ['c', 'x'], ['a', 'y'], ['e', 'x'], ['e', 'y']
+  ]
+  const result = analyze(edges, {graphs: true, strict: false})
+
+  assert.deepStrictEqual(result.sources, ['d', 'z', 'b', 'c', 'a', 'e'])
+  assert.deepStrictEqual(result.graphs, [
+    {nodes: new Set(['a', 'b', 'c', 'd', 'e', 'x', 'y']), sources: ['d', 'b', 'c', 'a', 'e']},
+    {nodes: new Set(['z']), sources: ['z']}
+  ])
+})
+
 test('toposource handles options', () => {
   assert.deepEqual(analyze([['a', 'b']], ).queue, ['a', 'b'])
   assert.deepEqual(analyze([['a', 'b']], {queue: true}).queue, ['a', 'b'])
